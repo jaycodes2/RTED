@@ -1,0 +1,16 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\AndroidStudioProjects\RTEDV\OpenCV_Android_Java\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest6023118141154656015.xml:2:13-83
+INJECTED from C:\AndroidStudioProjects\RTEDV\OpenCV_Android_Java\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest6023118141154656015.xml:2:13-83
+	package
+		INJECTED from C:\AndroidStudioProjects\RTEDV\OpenCV_Android_Java\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest6023118141154656015.xml
+	xmlns:android
+		ADDED from C:\AndroidStudioProjects\RTEDV\OpenCV_Android_Java\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest6023118141154656015.xml:2:23-81
+uses-sdk
+INJECTED from C:\AndroidStudioProjects\RTEDV\OpenCV_Android_Java\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest6023118141154656015.xml reason: use-sdk injection requested
+INJECTED from C:\AndroidStudioProjects\RTEDV\OpenCV_Android_Java\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest6023118141154656015.xml
+INJECTED from C:\AndroidStudioProjects\RTEDV\OpenCV_Android_Java\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest6023118141154656015.xml
+	android:targetSdkVersion
+		INJECTED from C:\AndroidStudioProjects\RTEDV\OpenCV_Android_Java\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest6023118141154656015.xml
+	android:minSdkVersion
+		INJECTED from C:\AndroidStudioProjects\RTEDV\OpenCV_Android_Java\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest6023118141154656015.xml

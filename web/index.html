@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Edge Detection Viewer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .viewer-section {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        #frameCanvas {
+            width: 100%;
+            background: #000;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .stats-panel {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .mode-active {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .websocket-active {
+            background: linear-gradient(45deg, #2196F3, #21CBF3);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        .sample-frame {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .info-text {
+            text-align: center;
+            opacity: 0.8;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .connection-status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .connected {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+        }
+
+        .disconnected {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔍 Real-Time Edge Detection Viewer</h1>
+
+    <div class="viewer-section">
+        <div class="frame-display">
+            <canvas id="frameCanvas"></canvas>
+            <div class="info-text">
+                Displaying processed frames from Android app
+            </div>
+        </div>
+
+        <div class="stats-panel">
+            <h3>📊 Frame Statistics</h3>
+            <div class="stat-item">
+                <div class="stat-label">Current FPS</div>
+                <div id="fpsCounter" class="stat-value">--</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Resolution</div>
+                <div id="resolutionDisplay" class="stat-value">--</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Processing Mode</div>
+                <div id="modeDisplay" class="stat-value">Raw</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Frame Count</div>
+                <div id="frameCount" class="stat-value">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Last Update</div>
+                <div id="lastUpdate" class="stat-value">--</div>
+            </div>
+
+            <!-- ADDED: WebSocket Status -->
+            <div class="stat-item">
+                <div class="stat-label">WebSocket Status</div>
+                <div id="connectionStatus" class="stat-value">🔴 Disconnected</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="btnRaw" class="mode-active">📷 Raw</button>
+        <button id="btnGrayscale">⚫ Grayscale</button>
+        <button id="btnEdgeDetection">🔍 Edge Detection</button>
+        <button id="btnLoadSample">🖼️ Load Sample Frame</button>
+        <button id="btnSimulateStream">🎬 Simulate Live Stream</button>
+
+        <!-- ADDED: WebSocket Simulation Button -->
+        <button id="btnSimulateWebSocket">🔗 Simulate WebSocket</button>
+    </div>
+
+    <div class="sample-frame">
+        <p>This viewer demonstrates the web interface for the Android edge detection app.</p>
+        <p>In production, frames would be streamed via WebSocket/HTTP from the Android app.</p>
+
+        <!-- ADDED: Connection Status Display -->
+        <div id="websocketStatus" class="connection-status disconnected">
+            ⚡ WebSocket: Ready to connect to Android app
+        </div>
+    </div>
+</div>
+
+<script type="module" src="dist/viewer.js"></script>
+</body>
+</html>
