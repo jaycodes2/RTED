@@ -24,3 +24,6 @@ include(":app")
 include(":jni")
 include(":gl")
 include(":web")
+
+include(":opencv_java")
+project(":opencv_java").projectDir = file("OpenCV_Android_Java")

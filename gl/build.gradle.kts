@@ -35,6 +35,9 @@ android {
 dependencies {
 
     implementation(project(":jni"))
+
+    implementation(project(":opencv_java"))
+
     val cameraxVersion = "1.3.1"
     implementation("androidx.camera:camera-core:${cameraxVersion}")
     implementation("androidx.camera:camera-lifecycle:${cameraxVersion}")

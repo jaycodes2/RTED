@@ -44,12 +44,17 @@ dependencies {
     implementation(project(":jni"))
     implementation(project(":gl"))
 
+
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation(project(":opencv_java"))
+
     val cameraxVersion = "1.3.1" // Check for the latest stable version
     implementation("androidx.camera:camera-core:$cameraxVersion")
     implementation("androidx.camera:camera-camera2:$cameraxVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation("androidx.camera:camera-view:$cameraxVersion")
 
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")

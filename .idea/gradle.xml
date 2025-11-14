@@ -10,6 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/OpenCV_Android_Java" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/gl" />
             <option value="$PROJECT_DIR$/jni" />
